@@ -1,3 +1,7 @@
+// Author(s) 
+// Tamara Lawlor 19276494
+// Mary Tease 19256434
+// Rachel O'Donoghue 19274505
 public class CS4141Project
 {
    String[] tabs = new String[256];
@@ -6,6 +10,7 @@ public class CS4141Project
    private int indexNumber;
    private int sheetsAvailable;
    int i;
+   int index = i + 1;
    
     public void init(){
       tabs[0] = "Sheet1";
@@ -29,22 +34,118 @@ public class CS4141Project
    public void Display(){
       for(int i=0;i < nextSheetNumber; i++){
         System.out.print(tabs[i] + " ");
-    }
-    }
+      }
+   }
    
-   public int index(String sheetname){
-        for(int i=0;i < tabs.length; i++){
-         if(tabs[i] != null && tabs[i] == sheetname){
+   public int index(String sheetName){
+        for(int i=0;i < nextAvailable; i++){
+         if(!tabs[i].equals(null) && tabs[i].equalsIgnoreCase(sheetName)){
           indexNumber = i;
           return indexNumber;//if found
-         }
+
         }
-        return -1;//if not found
-        
-    }
-    
+       }
+       return -1;//if not found
+   }
+   
    public int length(){
        sheetsAvailable = tabs.length - nextAvailable;
        return tabs.length - sheetsAvailable;
    }
+   
+   public String sheetName(int index){
+        for(int i=0;i < tabs.length; i++){
+          if(i == index){
+          indexNumber = i;
+          return tabs[i-1]; //if found
+          }
+       }
+       return null; //if not found
+   }
+   
+   //CASE SENSITIVE
+   public int rename(String currentName, String newName){
+       for(int i=0;i < tabs.length; i++){
+          String temp = "";
+          if(tabs[i].equalsIgnoreCase(currentName)){
+             temp = tabs[i].replace(currentName, newName);
+             tabs[i] = temp;
+             return i;
+          }
+       }
+       return -1; 
+   }
+   
+   
+   public int shiftRight(int index) {
+        for(i = index;i < tabs.length-1; i++) {
+            tabs[i] = tabs[i - 1];
+        }
+        return 0; 
+   }
+    
+   public int shiftLeft(int index) {
+        for(i = index;i < tabs.length - 1; i++) {
+            tabs[i] = tabs[i + 1];
+        }
+        return 0;
+   }
+   //WORKS EXCEPT RETURNS
+   public int remove(String sheetName){
+       for(int index=i;i < tabs.length - 1; i++){
+           if(nextAvailable != 1 && tabs[i].equalsIgnoreCase(sheetName)){
+               shiftLeft(i);
+               return i;
+            }
+       }
+       return -1;
+   }
+   
+   public String remove(int index){
+       for(int i=index;i < tabs.length - 1; i++){
+           if(tabs.length != 1 && i == index){
+               i = i - 1;
+               String x= "Sheet" + Integer.toString(index);
+               shiftLeft(i);
+               
+               return x;
+            }
+        }
+       return null;
+    }
+   //NOT WORKING
+   public int move(String from, String to, boolean before){
+       for(int i =index;i < tabs.length; i++){
+          int indexOfFrom = index(from + 1);
+          int indexOfTo = index(to);
+          if(!from.equalsIgnoreCase(to) && tabs[i].equalsIgnoreCase(to)){
+              if(before == true){
+                 if(indexOfFrom < indexOfTo){
+                     shiftRight(indexOfFrom);
+                     indexOfFrom = indexOfTo - 1;
+                     
+                    } else{
+                     shiftLeft(indexOfFrom);
+                     indexOfFrom = indexOfTo - 1;
+                }
+                return indexOfTo; //moved before the to sheet
+                } else {
+                   if(indexOfFrom < indexOfTo){
+                     shiftRight(indexOfFrom);
+                     indexOfFrom = indexOfTo + 1;
+                     
+                    } else{
+                     shiftLeft(indexOfFrom);
+                     indexOfFrom = indexOfTo + 1;
+                }
+              }
+          }
+       }
+       return -1; //if from = to
+   }  
+   
+   
 }
+ 
+    
+    
