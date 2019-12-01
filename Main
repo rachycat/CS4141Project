@@ -26,7 +26,7 @@ public class CS4141Project
         tabs[nextAvailable]=x;
         nextAvailable++;
         return true;
-        }
+       }
        
        return false;
    }
@@ -76,7 +76,6 @@ public class CS4141Project
        return -1; 
    }
    
-   
    public int shiftRight(int index) {
         for(i = index;i < tabs.length-1; i++) {
             tabs[i] = tabs[i - 1];
@@ -90,12 +89,13 @@ public class CS4141Project
         }
         return 0;
    }
-   //WORKS EXCEPT RETURNS
+   
    public int remove(String sheetName){
-       for(int index=i;i < tabs.length - 1; i++){
+       for(int i=index;i < tabs.length - 1; i++){
            if(nextAvailable != 1 && tabs[i].equalsIgnoreCase(sheetName)){
                shiftLeft(i);
-               return i;
+               i = i + 1;
+               return i; //if sheet3 returns 3
             }
        }
        return -1;
@@ -108,14 +108,43 @@ public class CS4141Project
                String x= "Sheet" + Integer.toString(index);
                shiftLeft(i);
                
-               return x;
+               return x; //if 3 returns sheet3
             }
         }
        return null;
-    }
+   }
+   
+   
+   public String moveToEnd(int from){
+       for(int i=index;i < tabs.length - 1; i++){
+           if(from < tabs.length){
+               i = i + 1;
+               String temp = "Sheet" + Integer.toString(from);
+               remove(from); 
+               tabs[nextAvailable - 1] = temp;
+               return temp; //if 2 returns sheet 2
+            }
+        }
+       return null; 
+   }
+    
+   public int moveToEnd(String from){
+       for(int i=index;i < tabs.length - 1; i++){
+           if(tabs[i].equalsIgnoreCase(from)){
+               i = i + 1;
+               String temp = from;
+               remove(from);
+               tabs[nextAvailable - 1] = temp;
+               return i; //if sheet2 returns 2
+            }
+        }
+       return -1;
+   }
+    
+    
    //NOT WORKING
    public int move(String from, String to, boolean before){
-       for(int i =index;i < tabs.length; i++){
+       for(int i =index;i < tabs.length - 1; i++){
           int indexOfFrom = index(from + 1);
           int indexOfTo = index(to);
           if(!from.equalsIgnoreCase(to) && tabs[i].equalsIgnoreCase(to)){
@@ -143,6 +172,8 @@ public class CS4141Project
        }
        return -1; //if from = to
    }  
+   
+   
    
    
 }
