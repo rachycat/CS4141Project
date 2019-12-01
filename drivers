@@ -1,0 +1,43 @@
+public class Driver3
+{
+    public static void main(String[] args) {
+        System.out.println("CS4141 Project");
+        //need two instances at the least, then Output information.
+        CS4141Project instance = new CS4141Project();
+        
+        instance.init();
+        instance.add();
+        instance.Display();
+        instance.length();
+        instance.Display();
+        instance.remove(2);
+        instance.Display();
+        //instance.move();
+        instance.Display();
+        instance.moveToEnd(2);
+        instance.Display();
+    }
+}
+
+public class Driver2
+{
+    public static void main(String[] args) {
+        System.out.println("CS4141 Project");
+        //need two instances at the least, then Output information.
+        CS4141Project instance = new CS4141Project();
+        
+        instance.init();
+        instance.add();
+        instance.Display();
+        instance.moveToEnd(3);
+        instance.Display();
+        instance.remove(3);
+        instance.Display();
+        //instance.move();
+        instance.Display();
+        instance.add();
+        instance.Display();
+        instance.length();
+        instance.Display();
+    }
+}
