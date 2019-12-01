@@ -18,32 +18,30 @@ public class CS4141Project
       tabs[2] = "Sheet3";
       
    }
-   
+   //NEEDS TO NOT MAKE DUPLICATES
    public boolean add(){
        nextSheetNumber = nextAvailable + 1;
        String x= "Sheet" + Integer.toString(nextSheetNumber);
        if(nextAvailable < tabs.length){
-        tabs[nextAvailable]=x;
-        nextAvailable++;
-        return true;
+           tabs[nextAvailable]=x;
+           nextAvailable++;
+           return true;
        }
-       
        return false;
    }
 
    public void Display(){
       for(int i=0;i < nextSheetNumber; i++){
-        System.out.print(tabs[i] + " ");
+         System.out.print(tabs[i] + " ");
       }
    }
    
    public int index(String sheetName){
         for(int i=0;i < nextAvailable; i++){
-         if(!tabs[i].equals(null) && tabs[i].equalsIgnoreCase(sheetName)){
-          indexNumber = i;
-          return indexNumber;//if found
-
-        }
+          if(!tabs[i].equals(null) && tabs[i].equalsIgnoreCase(sheetName)){
+              indexNumber = i;
+              return indexNumber;//if found
+          }
        }
        return -1;//if not found
    }
@@ -55,23 +53,22 @@ public class CS4141Project
    
    public String sheetName(int index){
         for(int i=0;i < tabs.length; i++){
-          if(i == index){
-          indexNumber = i;
-          return tabs[i-1]; //if found
-          }
+           if(i == index){
+               indexNumber = i;
+               return tabs[i-1]; //if found
+           }
        }
        return null; //if not found
    }
-   
-   //CASE SENSITIVE
+   //CASE SENSITIVE && ALLOWS DUPLICATES && INDEX
    public int rename(String currentName, String newName){
        for(int i=0;i < tabs.length; i++){
-          String temp = "";
-          if(tabs[i].equalsIgnoreCase(currentName)){
-             temp = tabs[i].replace(currentName, newName);
-             tabs[i] = temp;
-             return i;
-          }
+           String temp = "";
+           if(tabs[i].equalsIgnoreCase(currentName)){
+               temp = tabs[i].replace(currentName, newName);
+               tabs[i] = temp;
+               return i;
+           }
        }
        return -1; 
    }
@@ -96,7 +93,7 @@ public class CS4141Project
                shiftLeft(i);
                i = i + 1;
                return i; //if sheet3 returns 3
-            }
+           }
        }
        return -1;
    }
@@ -107,13 +104,11 @@ public class CS4141Project
                i = i - 1;
                String x= "Sheet" + Integer.toString(index);
                shiftLeft(i);
-               
                return x; //if 3 returns sheet3
-            }
-        }
+           }
+       }
        return null;
    }
-   
    
    public String moveToEnd(int from){
        for(int i=index;i < tabs.length - 1; i++){
@@ -124,7 +119,7 @@ public class CS4141Project
                tabs[nextAvailable - 1] = temp;
                return temp; //if 2 returns sheet 2
             }
-        }
+       }
        return null; 
    }
     
@@ -145,35 +140,58 @@ public class CS4141Project
    //NOT WORKING
    public int move(String from, String to, boolean before){
        for(int i =index;i < tabs.length - 1; i++){
-          int indexOfFrom = index(from + 1);
-          int indexOfTo = index(to);
-          if(!from.equalsIgnoreCase(to) && tabs[i].equalsIgnoreCase(to)){
-              if(before == true){
-                 if(indexOfFrom < indexOfTo){
-                     shiftRight(indexOfFrom);
-                     indexOfFrom = indexOfTo - 1;
+           int indexOfFrom = index(from + 1);
+           int indexOfTo = index(to);
+           if(!from.equalsIgnoreCase(to)){
+               if(before == true){
+                    if(indexOfFrom < indexOfTo){
+                       shiftRight(indexOfFrom);
+                     } else{
+                       shiftLeft(indexOfFrom);
+                       indexOfFrom = indexOfTo - 1;
+                   }
+               } else {
+                    if(indexOfFrom < indexOfTo){
+                       shiftRight(indexOfFrom);
+                       indexOfFrom = indexOfTo + 1;
                      
-                    } else{
-                     shiftLeft(indexOfFrom);
-                     indexOfFrom = indexOfTo - 1;
-                }
-                return indexOfTo; //moved before the to sheet
-                } else {
-                   if(indexOfFrom < indexOfTo){
-                     shiftRight(indexOfFrom);
-                     indexOfFrom = indexOfTo + 1;
-                     
-                    } else{
-                     shiftLeft(indexOfFrom);
-                     indexOfFrom = indexOfTo + 1;
-                }
-              }
-          }
+                     } else{
+                       shiftLeft(indexOfFrom);
+                       indexOfFrom = indexOfTo + 1;
+                   }
+               }
+               return indexOfTo;
+           }
        }
        return -1; //if from = to
    }  
    
-   
+   public String move(int from, int to, boolean before){
+       for(int i =index;i < tabs.length - 1; i++){
+           if(from != to){
+               if(before == true){
+                   if(from < to){
+                       shiftLeft(from);
+                       
+                    } else{
+                       shiftRight(from);
+                       
+                    }
+                } else{
+                    if(from < to){
+                       shiftLeft(from);
+                       
+                     }else{
+                       shiftRight(from);
+                       
+                    }
+                }
+               return tabs[from];
+            }
+        }
+       return null; //if from = to
+   }
+  
    
    
 }
